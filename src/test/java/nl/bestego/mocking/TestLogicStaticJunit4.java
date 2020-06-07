@@ -13,22 +13,30 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
+// step-1: annotate to use PowerMock for running tests
 @RunWith(PowerMockRunner.class)
+
+// step-2: annotate the class(es) that need to be mocked
 @PrepareForTest({StaticRandom.class,Random.class})
 
 public class TestLogicStaticJunit4 {
 
+    //step-3: instantiation class under test
     Logic systemUnderTest = new Logic();
 
     @Test
     public void testRunResultLessThanOneThird() throws RandomException {
         String expected = "Random less than 1/3";
+        // step-4: indicate that you are going to define a static mock
         mockStatic(StaticRandom.class);
+        // step-5: define the wanted response for the stubbed method
         given(StaticRandom.random()).willReturn(false);
 
+        // step-6: run the class under test
         String actual = systemUnderTest.runStatic();
 
 //        then(actual).should().contains(expected);
+        // - step-7: assert
         assertEquals(expected, actual);
     }
 
