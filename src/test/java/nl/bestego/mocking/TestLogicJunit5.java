@@ -13,7 +13,7 @@ import static org.mockito.BDDMockito.given;
 @ExtendWith(MockitoExtension.class)
 //@RunWith(JUnitPlatform.class)
 
-public class LogicTestJunit5 {
+public class TestLogicJunit5 {
 
     @Mock
     Random rnd;

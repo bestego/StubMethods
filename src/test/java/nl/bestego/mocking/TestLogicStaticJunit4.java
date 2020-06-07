@@ -16,7 +16,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({StaticRandom.class,Random.class})
 
-public class LogicTestStaticJunit4 {
+public class TestLogicStaticJunit4 {
 
     Logic systemUnderTest = new Logic();
 
