@@ -6,29 +6,27 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
-@RunWith(MockitoJUnitRunner.class)
-public class LogicTestJunit4 {
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({StaticRandom.class,Random.class})
 
-    @Mock
-    Random rnd;
+public class LogicTestStaticJunit4 {
 
-    @Mock
-    StaticRandom srnd;
-
-    @InjectMocks
-    Logic systemUnderTest;
+    Logic systemUnderTest = new Logic();
 
     @Test
     public void testRunResultLessThanOneThird() throws RandomException {
         String expected = "Random less than 1/3";
-        given(rnd.random()).willReturn(false);
+        mockStatic(StaticRandom.class);
+        given(StaticRandom.random()).willReturn(false);
 
-        String actual = systemUnderTest.run();
+        String actual = systemUnderTest.runStatic();
 
 //        then(actual).should().contains(expected);
         assertEquals(expected, actual);
@@ -37,9 +35,10 @@ public class LogicTestJunit4 {
     @Test
     public void testRunResultMoreThanTwoThird() throws RandomException {
         String expected = "Random greater than 2/3";
-        given(rnd.random()).willReturn(true);
+        mockStatic(StaticRandom.class);
+        given(StaticRandom.random()).willReturn(true);
 
-        String actual = systemUnderTest.run();
+        String actual = systemUnderTest.runStatic();
 
 //        then(actual).should().contains(expected);
         assertEquals(expected, actual);
@@ -49,10 +48,11 @@ public class LogicTestJunit4 {
     public void testRunResultInBetween() {
         String expected = "Random between 1/3 .. 2/3";
         try {
-            given(rnd.random()).willThrow(RandomException.class);
+            mockStatic(StaticRandom.class);
+            given(StaticRandom.random()).willThrow(RandomException.class);
         } catch (RandomException e) { }
 
-        String actual = systemUnderTest.run();
+        String actual = systemUnderTest.runStatic();
 
         Assertions.assertEquals(expected, actual);
     }

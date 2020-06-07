@@ -16,7 +16,21 @@ public class Logic {
         } catch (RandomException e) {
             message = "Random between 1/3 .. 2/3";
         }
-        System.out.println(message);
+        System.out.println("run(): "+ message);
+        return message;
+    }
+
+    public String runStatic() {
+        try {
+            if (StaticRandom.random()) {
+                message = "Random greater than 2/3";
+            } else {
+                message = "Random less than 1/3";
+            }
+        } catch (RandomException e) {
+            message = "Random between 1/3 .. 2/3";
+        }
+        System.out.println("runStatic(): "+ message);
         return message;
     }
 }
